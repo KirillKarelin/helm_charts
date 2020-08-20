@@ -122,7 +122,7 @@ email:
 # Don't change these unless you know what you're doing
 service:
   name: sentry
-  type: ClusterIP
+  type: LoadBalancer
   externalPort: 9000
   internalPort: 9000
 
@@ -133,8 +133,8 @@ service:
   ## External IP addresses of service
   ## Default: nil
   ##
-  ##externalIPs:
-  ##- 192.168.0.1
+  externalIPs:
+  - 192.168.2.2
 
   ## Load Balancer allow-list
   # loadBalancerSourceRanges: []
