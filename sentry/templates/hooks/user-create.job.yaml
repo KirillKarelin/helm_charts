@@ -58,14 +58,7 @@ spec:
         - name: SENTRY_DB_NAME
           value: {{ default "sentry" .Values.postgresql.postgresqlDatabase | quote }}
         - name: SENTRY_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-            {{- if .Values.postgresql.existingSecret }}
-              name: {{ .Values.postgresql.existingSecret }}
-            {{- else }}
-              name: {{ template "sentry.postgresql.secret" . }}
-            {{- end }}
-              key: {{ template "sentry.postgresql.secretKey" . }}
+          value: postgres
         - name: SENTRY_POSTGRES_HOST
           value: {{ template "sentry.postgresql.host" . }}
         - name: SENTRY_POSTGRES_PORT
