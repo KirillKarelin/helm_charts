@@ -234,7 +234,7 @@ postgresql:
   postgresqlUsername: postgres
   # The following variables are only used when internal PG is disabled
   # postgresqlHost: postgres
-  # postgresqlPassword: postgres
+  postgresqlPassword: postgres
   # postgresqlPort: 5432
   # When defined the `postgresqlPassword` field is ignored
   # existingSecret: secret-name
