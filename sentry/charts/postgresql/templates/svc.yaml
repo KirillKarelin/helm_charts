@@ -3,36 +3,24 @@ kind: Service
 metadata:
   name: {{ template "postgresql.fullname" . }}
   labels:
-    app: {{ template "postgresql.name" . }}
-    chart: {{ template "postgresql.chart" . }}
-    release: {{ .Release.Name | quote }}
-    heritage: {{ .Release.Service | quote }}
-{{- with .Values.service.annotations }}
+    app: {{ template "postgresql.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+{{- if .Values.metrics.enabled }}
   annotations:
-{{ toYaml . | indent 4 }}
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9187"
 {{- end }}
 spec:
   type: {{ .Values.service.type }}
-  {{- if and .Values.service.loadBalancerIP (eq .Values.service.type "LoadBalancer") }}
-  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
-  {{- end }}
-  {{- if and (eq .Values.service.type "LoadBalancer") .Values.service.loadBalancerSourceRanges }}
-  loadBalancerSourceRanges:
-  {{ with .Values.service.loadBalancerSourceRanges }}
-{{ toYaml . | indent 4 }}
-{{- end }}
-  {{- end }}
-  {{- if and (eq .Values.service.type "ClusterIP") .Values.service.clusterIP }}
-  clusterIP: {{ .Values.service.clusterIP }}
-  {{- end }}
   ports:
   - name: postgresql
-    port: {{ template "postgresql.port" . }}
+    port: {{ .Values.service.port }}
     targetPort: postgresql
-    {{- if .Values.service.nodePort }}
-    nodePort: {{ .Values.service.nodePort }}
-    {{- end }}
+{{- if .Values.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.service.externalIPs | indent 4 }}
+{{- end }}
   selector:
-    app: {{ template "postgresql.name" . }}
-    release: {{ .Release.Name | quote }}
-    role: master
+    app: {{ template "postgresql.fullname" . }}
