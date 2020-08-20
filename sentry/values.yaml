@@ -133,8 +133,8 @@ service:
   ## External IP addresses of service
   ## Default: nil
   ##
-  externalIPs:
-  - 192.168.2.2
+  #externalIPs:
+  #- 192.168.2.2
 
   ## Load Balancer allow-list
   # loadBalancerSourceRanges: []
