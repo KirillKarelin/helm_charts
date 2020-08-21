@@ -25,9 +25,9 @@ web:
     #   cpu: 300m
     #   memory: 300Mi
   env:
-    - name: GITHUB_APP_ID
+    - name: GOOGLE_CLIENT_ID
       value: "123"
-    - name: GITHUB_API_SECRET
+    - name: GOOGLE_CLIENT_SECRET
       value: "123"
   nodeSelector: {}
   tolerations: []
